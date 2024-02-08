@@ -1,10 +1,11 @@
 import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import GlobalApi from "../../../hooks/GlobalApi";
+import Heading from "../../../Components/Heading";
 
 export default function Slider() {
   const [slider, setSlider] = useState([]);
-  console.log(slider);
+  // console.log(slider);
   useEffect(() => {
     getSliders();
   }, []);
@@ -17,14 +18,13 @@ export default function Slider() {
   };
   return (
     <View>
-      <Text style={styles.heading}>Offers For You</Text>
+      <Heading text={"Offers For You"} />
       <FlatList
         data={slider}
         horizontal={true}
-        
         showsHorizontalScrollIndicator={false}
         renderItem={({ item, index }) => (
-          <View style={{marginRight:20}}>
+          <View style={{ marginRight: 20 }}>
             <Image
               source={{ uri: item?.image?.url }}
               style={styles.imageSlider}
