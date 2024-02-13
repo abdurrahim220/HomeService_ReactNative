@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
   container: {
     display:'flex',
     flexDirection:"row",
-    // alignItems:"center",
+    alignItems:"center",
     justifyContent:"space-between"
   },
   heading: {
     fontSize: 20,
     fontFamily: "outfit-medium",
-    marginBottom: 10,
+    // marginBottom: 10,
   },
 });

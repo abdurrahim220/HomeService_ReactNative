@@ -25,16 +25,19 @@ export default function Categories() {
       <FlatList
         data={categories}
         numColumns={4}
-        renderItem={({ item, index }) => (
-          <View style={styles.container}>
-            <View style={styles.iconsContainer}>
-              <Image
-                source={{ uri: item?.icon?.url }}
-                style={{ width: 30, height: 30 }}
-              />
+        renderItem={({ item, index }) =>
+          index <= 3 && (
+            <View style={styles.container}>
+              <View style={styles.iconsContainer}>
+                <Image
+                  source={{ uri: item?.icon?.url }}
+                  style={{ width: 30, height: 30 }}
+                />
+              </View>
+              <Text style={{ fontFamily: "outfit-medium" }}>{item.name}</Text>
             </View>
-          </View>
-        )}
+          )
+        }
       />
     </View>
   );
