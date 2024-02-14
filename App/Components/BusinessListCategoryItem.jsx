@@ -1,10 +1,16 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "../Utils/Colors";
-import { Entypo } from '@expo/vector-icons';
+import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 export default function BusinessListCategoryItem({ business }) {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => navigation.push("business-detail", { business: business })}
+    >
       <Image source={{ uri: business?.images[0]?.url }} style={styles.image} />
 
       <View style={styles.containerDetails}>
@@ -25,10 +31,11 @@ export default function BusinessListCategoryItem({ business }) {
         <Text
           style={{ fontFamily: "outfit", color: Colors.GRAY, fontSize: 16 }}
         >
-        <Entypo name="location" size={20} color={Colors.PRIMARY} />  {business?.address}
+          <Entypo name="location" size={20} color={Colors.PRIMARY} />{" "}
+          {business?.address}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
