@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Modal,
 } from "react-native";
 import React, { useState } from "react";
 import { useRoute } from "@react-navigation/native";
@@ -15,11 +16,14 @@ import { useNavigation } from "@react-navigation/native";
 import Heading from "../../Components/Heading";
 import BusinessDetailsCard from "../../Components/BusinessDetailsCard";
 import BusinessDetailsPhotos from "../../Components/BusinessDetailsPhotos";
+import BookingModal from "../../Components/BookingModal";
 export default function BusinessDetailsScreen() {
   const param = useRoute().params;
   const [business, setBusiness] = useState(param.business);
 
   const navigation = useNavigation();
+
+  const [showModal,setShowModal]=useState(false)
 
   //   const toggleTextVisibility = () => {
   //     setShowFullText(!showFullText);
@@ -116,7 +120,7 @@ export default function BusinessDetailsScreen() {
             Message
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.bookingBtn}>
+        <TouchableOpacity style={styles.bookingBtn} onPress={()=>setShowModal(true)}>
           <Text
             style={{
               textAlign: "center",
@@ -129,6 +133,10 @@ export default function BusinessDetailsScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+      {/* booking modal on press book */}
+      <Modal animationType="slide" visible={showModal}>
+        <BookingModal closeModal={()=>setShowModal(false)}/>
+      </Modal>
     </View>
   );
 }
