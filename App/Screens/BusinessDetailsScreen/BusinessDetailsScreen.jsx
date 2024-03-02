@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
+  Linking,
 } from "react-native";
 import React, { useState } from "react";
 import { useRoute } from "@react-navigation/native";
@@ -13,7 +14,7 @@ import Colors from "../../Utils/Colors";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import Heading from "../../Components/Heading";
+
 import BusinessDetailsCard from "../../Components/BusinessDetailsCard";
 import BusinessDetailsPhotos from "../../Components/BusinessDetailsPhotos";
 import BookingModal from "../../Components/BookingModal";
@@ -28,6 +29,14 @@ export default function BusinessDetailsScreen() {
   //   const toggleTextVisibility = () => {
   //     setShowFullText(!showFullText);
   //   };
+
+  const onMessageBtnClick = () => {
+    Linking.openURL(
+      "mailto:" +
+        business?.email +
+        "?subject=I am looking for your services&body=Hi There"
+    );
+  };
 
   return (
     <View>
@@ -108,7 +117,10 @@ export default function BusinessDetailsScreen() {
       <View
         style={{ display: "flex", flexDirection: "row", gap: 5, margin: 5 }}
       >
-        <TouchableOpacity style={styles.messageBtn}>
+        <TouchableOpacity
+          style={styles.messageBtn}
+          onPress={() => () => onMessageBtnClick()}
+        >
           <Text
             style={{
               textAlign: "center",
