@@ -1,5 +1,6 @@
 import {
   FlatList,
+  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,7 @@ export default function BookingModal({ closeModal }) {
   const [timeList, setTimeList] = useState();
   const [selectedTime, setSelectedTime] = useState();
   const [selectedDate, setSelectedDate] = useState();
+  const [note, setNote] = useState([]);
   useEffect(() => {
     getTime();
   }, []);
@@ -45,7 +47,7 @@ export default function BookingModal({ closeModal }) {
 
   return (
     <ScrollView>
-      <View style={{ padding: 20 }}>
+      <KeyboardAvoidingView style={{ padding: 20 }}>
         <TouchableOpacity
           onPress={() => closeModal()}
           style={{
@@ -67,6 +69,7 @@ export default function BookingModal({ closeModal }) {
         <View style={styles.calenderContainer}>
           <CalendarPicker
             width={320}
+            // height={300}
             onDateChange={setSelectedDate}
             minDate={Date.now()}
             todayBackgroundColor={Colors.BLACK}
@@ -98,17 +101,25 @@ export default function BookingModal({ closeModal }) {
             )}
           />
         </View>
-        <View style={{paddingVertical:15}}>
+
+        <View style={{ paddingVertical: 10 }}>
           <Heading text={"Any Suggestion Note"} />
-          {/* <TextInput  style={styles.textInput}/> */}
           <TextInput
             placeholder="Note"
             style={styles.noteInputArea}
             numberOfLines={4}
             multiline={true}
+            onChange={(e) => setNote(e)}
           />
         </View>
-      </View>
+
+        {/* conformation button */}
+        <View style={{ paddingVertical: 20 }}>
+          <TouchableOpacity>
+            <Text style={styles.confirmBtn}>Confirm & Book</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
 
       {/* note section */}
     </ScrollView>
@@ -149,5 +160,16 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: 15,
     fontFamily: "outfit",
+    borderColor: Colors.PRIMARY_LIGHT,
+  },
+  confirmBtn: {
+    textAlign: "center",
+    fontFamily: "outfit-medium",
+    fontSize: 17,
+    backgroundColor: Colors.PRIMARY,
+    color: Colors.WHITE,
+    padding: 12,
+    borderRadius: 99,
+    elevation: 2,
   },
 });
