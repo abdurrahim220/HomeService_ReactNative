@@ -6,15 +6,20 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-import { useUser } from "@clerk/clerk-expo";
+import { useUser, useAuth } from "@clerk/clerk-expo";
 import Colors from "../../Utils/Colors";
 
 export default function ProfileScreen() {
   const { user } = useUser();
+  const { isLoaded, signOut } = useAuth();
+  if (!isLoaded) {
+    return null;
+  }
 
   const profileMenu = [
     {
@@ -26,11 +31,6 @@ export default function ProfileScreen() {
       id: 2,
       name: "My Booking",
       icon: "bookmark-sharp",
-    },
-    {
-      id: 3,
-      name: "Logout",
-      icon: "log-out",
     },
   ];
 
@@ -53,7 +53,7 @@ export default function ProfileScreen() {
           </View>
         </View>
 
-        <View style={{paddingTop:50}}>
+        <View style={{ paddingTop: 50 }}>
           <FlatList
             data={profileMenu}
             renderItem={({ item, index }) => (
@@ -63,6 +63,16 @@ export default function ProfileScreen() {
               </TouchableOpacity>
             )}
           />
+
+          <TouchableOpacity style={styles.profileMenu}>
+            <Ionicons name="log-out" size={35} color={Colors.PRIMARY} />
+            <Button
+              title="Sign Out"
+              onPress={() => {
+                signOut();
+              }}
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -94,9 +104,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     // justifyContent:'center',
-    paddingHorizontal:80,
+    paddingHorizontal: 80,
     gap: 5,
-    marginBottom:20
+    marginBottom: 20,
   },
   profileMenu_title: {
     fontSize: 20,
