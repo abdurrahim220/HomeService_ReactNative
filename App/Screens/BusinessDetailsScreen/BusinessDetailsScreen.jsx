@@ -23,7 +23,7 @@ export default function BusinessDetailsScreen() {
 
   const navigation = useNavigation();
 
-  const [showModal,setShowModal]=useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   //   const toggleTextVisibility = () => {
   //     setShowFullText(!showFullText);
@@ -120,7 +120,10 @@ export default function BusinessDetailsScreen() {
             Message
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.bookingBtn} onPress={()=>setShowModal(true)}>
+        <TouchableOpacity
+          style={styles.bookingBtn}
+          onPress={() => setShowModal(true)}
+        >
           <Text
             style={{
               textAlign: "center",
@@ -135,7 +138,10 @@ export default function BusinessDetailsScreen() {
       </View>
       {/* booking modal on press book */}
       <Modal animationType="slide" visible={showModal}>
-        <BookingModal closeModal={()=>setShowModal(false)}/>
+        <BookingModal
+          businessId={business.id}
+          closeModal={() => setShowModal(false)}
+        />
       </Modal>
     </View>
   );

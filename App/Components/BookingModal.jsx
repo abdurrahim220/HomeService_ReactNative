@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  ToastAndroid,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -14,12 +15,15 @@ import CalendarPicker from "react-native-calendar-picker";
 import Colors from "../Utils/Colors";
 import Heading from "./Heading";
 import { useEffect, useState } from "react";
+import GlobalApi from "../hooks/GlobalApi";
+import { useUser } from "@clerk/clerk-expo";
 
-export default function BookingModal({ closeModal }) {
+export default function BookingModal({ businessId, closeModal }) {
   const [timeList, setTimeList] = useState();
   const [selectedTime, setSelectedTime] = useState();
   const [selectedDate, setSelectedDate] = useState();
-  const [note, setNote] = useState([]);
+  const [note, setNote] = useState();
+  const { user } = useUser();
   useEffect(() => {
     getTime();
   }, []);
@@ -43,6 +47,28 @@ export default function BookingModal({ closeModal }) {
       });
     }
     setTimeList(timeList);
+  };
+
+  // create booking method
+
+  const createNewBooking = () => {
+    // if (!selectedDate || selectedTime) {
+    //   ToastAndroid.show("Please select Date and Time", ToastAndroid.LONG);
+    //   return;
+    // }
+    const data = {
+      userName: user?.fullName,
+      userEmail: user?.primaryEmailAddress.emailAddress,
+      time: selectedTime,
+      date: selectedDate,
+      note: note,
+      businessId: businessId,
+    };
+    GlobalApi.createBooking(data).then((resp) => {
+      // console.log("Resp", resp);
+      ToastAndroid.show("Booking Created Successfully", ToastAndroid.LONG);
+      closeModal()
+    });
   };
 
   return (
@@ -115,7 +141,7 @@ export default function BookingModal({ closeModal }) {
 
         {/* conformation button */}
         <View style={{ paddingVertical: 20 }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => createNewBooking()}>
             <Text style={styles.confirmBtn}>Confirm & Book</Text>
           </TouchableOpacity>
         </View>
