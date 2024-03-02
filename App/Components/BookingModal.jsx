@@ -67,88 +67,90 @@ export default function BookingModal({ businessId, closeModal }) {
     GlobalApi.createBooking(data).then((resp) => {
       // console.log("Resp", resp);
       ToastAndroid.show("Booking Created Successfully", ToastAndroid.LONG);
-      closeModal()
+      closeModal();
     });
   };
 
   return (
-    <ScrollView>
-      <KeyboardAvoidingView style={{ padding: 20 }}>
-        <TouchableOpacity
-          onPress={() => closeModal()}
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            gap: 5,
-            alignItems: "center",
-            marginBottom: 10,
-          }}
-        >
-          <Ionicons name="arrow-back-outline" size={30} color="black" />
-          <Text style={{ fontSize: 25, fontFamily: "outfit-medium" }}>
-            Booking
-          </Text>
-        </TouchableOpacity>
-
-        {/* calender section */}
-        <Heading text={"Select date"} />
-        <View style={styles.calenderContainer}>
-          <CalendarPicker
-            width={320}
-            // height={300}
-            onDateChange={setSelectedDate}
-            minDate={Date.now()}
-            todayBackgroundColor={Colors.BLACK}
-            todayTextStyle={{ color: Colors.WHITE }}
-            selectedDayColor={Colors.PRIMARY}
-            selectedDayTextColor={Colors.WHITE}
-          />
-        </View>
-
-        {/* time select section */}
-        <View style={{ marginTop: 10 }}>
-          <Heading text={"Select Time Slot"} />
-          <FlatList
-            data={timeList}
-            horizontal={true}
-            showHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity onPress={() => setSelectedTime(item.time)}>
-                <Text
-                  style={[
-                    selectedTime == item.time
-                      ? styles.selectedTime
-                      : styles.unSelectedTime,
-                  ]}
-                >
-                  {item.time}
-                </Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-
-        <View style={{ paddingVertical: 10 }}>
-          <Heading text={"Any Suggestion Note"} />
-          <TextInput
-            placeholder="Note"
-            style={styles.noteInputArea}
-            numberOfLines={4}
-            multiline={true}
-            onChange={(e) => setNote(e)}
-          />
-        </View>
-
-        {/* conformation button */}
-        <View style={{ paddingVertical: 20 }}>
-          <TouchableOpacity onPress={() => createNewBooking()}>
-            <Text style={styles.confirmBtn}>Confirm & Book</Text>
+    <View>
+      <ScrollView>
+        <KeyboardAvoidingView style={{ padding: 20 }}>
+          <TouchableOpacity
+            onPress={() => closeModal()}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 5,
+              alignItems: "center",
+              marginBottom: 10,
+            }}
+          >
+            <Ionicons name="arrow-back-outline" size={30} color="black" />
+            <Text style={{ fontSize: 25, fontFamily: "outfit-medium" }}>
+              Booking
+            </Text>
           </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
 
-      {/* note section */}
-    </ScrollView>
+          {/* calender section */}
+          <Heading text={"Select date"} />
+          <View style={styles.calenderContainer}>
+            <CalendarPicker
+              width={320}
+              // height={300}
+              onDateChange={setSelectedDate}
+              minDate={Date.now()}
+              todayBackgroundColor={Colors.BLACK}
+              todayTextStyle={{ color: Colors.WHITE }}
+              selectedDayColor={Colors.PRIMARY}
+              selectedDayTextColor={Colors.WHITE}
+            />
+          </View>
+
+          {/* time select section */}
+          <View style={{ marginTop: 10 }}>
+            <Heading text={"Select Time Slot"} />
+            <FlatList
+              data={timeList}
+              horizontal={true}
+              showHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity onPress={() => setSelectedTime(item.time)}>
+                  <Text
+                    style={[
+                      selectedTime == item.time
+                        ? styles.selectedTime
+                        : styles.unSelectedTime,
+                    ]}
+                  >
+                    {item.time}
+                  </Text>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+
+          <View style={{ paddingVertical: 10 }}>
+            <Heading text={"Any Suggestion Note"} />
+            <TextInput
+              placeholder="Note"
+              style={styles.noteInputArea}
+              numberOfLines={4}
+              multiline={true}
+              onChange={(e) => setNote(e)}
+            />
+          </View>
+
+          {/* conformation button */}
+          <View style={{ paddingVertical: 20 }}>
+            <TouchableOpacity onPress={() => createNewBooking()}>
+              <Text style={styles.confirmBtn}>Confirm & Book</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+
+        {/* note section */}
+      </ScrollView>
+    </View>
   );
 }
 

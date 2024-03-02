@@ -87,6 +87,38 @@ const getBusinessListByCategory = async (category) => {
   return result;
 };
 
+const getUserBookingList = async (userEmail) => {
+  const query =
+    gql`
+    query GetUserBookings {
+      bookings(where: { userEmail: "` +
+    userEmail +
+    `" }, orderBy: updatedAt_DESC) {
+        time
+        userEmail
+        userName
+        id
+        date
+        bookingStatus
+        businessList {
+          address
+          id
+          images {
+            url
+          }
+          name
+          contactPerson
+          email
+          about
+        }
+      }
+    }
+  `;
+  const result = await request(MASTER_URL, query);
+
+  return result;
+};
+
 const createBooking = async (data) => {
   const mutationQuery =
     gql`
@@ -126,4 +158,5 @@ export default {
   getBusinessList,
   getBusinessListByCategory,
   createBooking,
+  getUserBookingList,
 };

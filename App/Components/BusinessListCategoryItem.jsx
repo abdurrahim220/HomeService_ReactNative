@@ -2,8 +2,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "../Utils/Colors";
 import { Entypo } from "@expo/vector-icons";
+import { AntDesign } from '@expo/vector-icons';
 import { useNavigation } from "@react-navigation/native";
-export default function BusinessListCategoryItem({ business }) {
+export default function BusinessListCategoryItem({ business, booking }) {
   const navigation = useNavigation();
 
   return (
@@ -31,9 +32,10 @@ export default function BusinessListCategoryItem({ business }) {
         <Text
           style={{ fontFamily: "outfit", color: Colors.GRAY, fontSize: 16 }}
         >
-          <Entypo name="location" size={20} color={Colors.PRIMARY} />{" "}
+          <Entypo name="location" size={20} color={Colors.PRIMARY} />
           {business?.address}
         </Text>
+        {booking?.id ? <Text>Show Booking</Text> : null}
       </View>
     </TouchableOpacity>
   );
